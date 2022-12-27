@@ -399,6 +399,7 @@ h1 {
     color: var(--white);
 }
 
+
 .option {
     height: 25vh;
     border: 2px solid var(--title-bg-color);
@@ -430,6 +431,17 @@ h1 {
     width: 75%;
     margin: auto;
     border: 2px solid var(--white);
+    display:flex;
+    gap:1rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.dice {
+    height:2.5rem;
+    width:2.5rem;
+    background-color: var(--white);
+    border:2px solid var(--roll-bg-color);
 }
 
 .player-turn {
@@ -458,6 +470,11 @@ h1 {
     border-top: 0.3rem solid var(--white);
     border-bottom: 0.2rem solid var(--title-bg-color);
 }
+
+.hidden {
+    display:none;
+}
+
 
 /*---ASIDE SECTION---*/
 
@@ -492,3 +509,6 @@ aside span {
 aside p {
     margin-bottom: 0.25rem;
 }
+
+
+

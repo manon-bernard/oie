@@ -88,37 +88,46 @@
                 <div class="case" id="case-61"><span>61</span></div>
                 <div class="case" id="case-62"><span>62</span></div>
                 <div class="case" id="case-63"><span>63</span></div>
-                
-
             </div>
         </section>
+
         <section class="roll-section">
-            <div class="option container">
+
+            <div class="option container" id="start-game">
                 <p>Un joueur contre l'ordinateur</p>
-                <button class="btn">Démarrer la partie</button>
+                <button class="btn" id="btn-start">Démarrer la partie</button>
             </div>
-            <div class="option roll-container">
+
+            <div class="option roll-container hidden" id="player-turn">
                 <div class="column">
-                    <div class="track"></div>
+                    <div class="track">
+                        <div class="dice"></div>
+                        <div class="dice"></div>
+                    </div>
                 </div>
                 <div class="column container">
-                    <p>L'adversaire vient d'avancer de : <span>8 cases</span></p>
-                    <div class="player-turn">
+                    <p class="hidden">L'adversaire vient d'avancer de : <span>8 cases</span></p>
+                    <div>
                         <p>A votre tour</p>
                         <img src="../assets/images/oie-blue.svg" alt="silhouette d'oie">
                     </div>
                     <button class="btn">Lancer les dés</button>
                 </div>
             </div>
-            <div class="option roll-container">
+
+            <div class="option roll-container hidden" id="computer-turn">
                 <div class="column">
-                    <div class="track"></div>
+                    <div class="track">
+                        <div class="dice"></div>
+                        <div class="dice"></div>
+                    </div>
                 </div>
                 <div class="column container">
                     <p>Au tour de l'adversaire</p>
                     <img src="../assets/images/oie-red.svg" alt="silhouette d'oie">
                 </div>
             </div>
+
         </section>
     </main>
     <aside>
@@ -146,6 +155,7 @@
         <p><span>Case 58: </span>Retournez à la <span>case départ</span></p>
     </aside>
 
+    <script src="../js/app.js"></script>
 </body>
 
 </html>
