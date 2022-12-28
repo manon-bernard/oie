@@ -10,13 +10,13 @@ function handleStartButton() {
     startGamePanel.classList.toggle('hidden');
 }
 
-//Players objects
+//Players & Game objects
 
 const game = {
     activePlayer: 'playerOne',
-    dice1:0,
-    dice2:0,
-    result:0,
+    dice1: 0,
+    dice2: 0,
+    result: 0,
 }
 
 const playerOne = {
@@ -32,7 +32,6 @@ const playerTwo = {
     currentPosition: 0,
     previousPosition: 0,
 }
-
 
 // Dice roll
 
@@ -70,57 +69,49 @@ function handleRollButton() {
     game.dice2 = rollOne(dices[1]);
     game.result = game.dice1 + game.dice2;
 
-    console.log(game);
+    //Move
 
+    let targetBox = "case-";
 
-    //Avance oie
-    //Calcul position
-    if (game.activePlayer == 'playerOne'){
+    function movePlayer(player) {
+        //Store starting point in previous position.
+        player.previousPosition = player.currentPosition;
 
-        //Attribution du résultat des dés et calcul des positions.
-        playerOne.previousPosition = playerOne.currentPosition;
-        playerOne.currentPosition += game.result;
-        let targetBox = "case-";
-        targetBox += playerOne.currentPosition;
+        //Update new position in current position.
+        player.currentPosition += game.result;
 
-        console.log(`${playerOne.name} fait un score de ${game.result}, par ${game.dice1} et ${game.dice2}, il avance de la case ${playerOne.previousPosition} à la case ${playerOne.currentPosition}`);
+        //Move Player token
+        targetBox += player.currentPosition;
+        const box = document.getElementById(targetBox);
+        const token = document.getElementById(player.name);
+        box.prepend(token);
+
         
-        //Avancer l'oie du joueur
-        const token1 = document.getElementById('playerOne-goose');
-        const box1 = document.getElementById(targetBox);
-        box1.prepend(token1);
-        
-    } else {
-        //Attribution du résultat des dés et calcul des positions.
-        playerTwo.previousPosition = playerTwo.currentPosition;
-        playerTwo.currentPosition += game.result;
-        let targetBox = "case-";
-        targetBox += playerTwo.currentPosition;
-
-        console.log(`${playerTwo.name} fait un score de ${game.result}, par ${game.dice1} et ${game.dice2}, il avance de la case ${playerTwo.previousPosition} à la case ${playerTwo.currentPosition}`);
-        
-        //Avancer l'oie du joueur
-        const token2 = document.getElementById('playerTwo-goose');
-        const box2 = document.getElementById(targetBox);
-        box2.prepend(token2);
+        // console.log(`${player.name} fait un score de ${game.result}, par ${game.dice1} et ${game.dice2}, il avance de la case ${player.previousPosition} à la case ${player.currentPosition}`);
     }
 
-
+    if (game.activePlayer == 'playerOne') {
+        movePlayer(playerOne);
+    } else {
+        movePlayer(playerTwo);
+    }
 
     //Passer au joueur suivant
     const turn = document.getElementById('turn');
 
-    if (game.activePlayer =='playerOne'){
+    if (game.activePlayer == 'playerOne') {
         game.activePlayer = 'playerTwo';
         turn.textContent = 'Joueur 2 '
     } else {
         game.activePlayer = 'playerOne';
         turn.textContent = 'Joueur 1 '
-    }  
-    
+    }
+
 }
 
 
 
-  //Gestion du tour par tour
+  //gestion de l'arrivée
+  //gestion des cases spéciales
+  //gestion des cases occupées
 
