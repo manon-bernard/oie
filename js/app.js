@@ -96,8 +96,18 @@ function handleRollButton() {
             movePlayerTokenToNewPosition(player);
 
         } else {
+
             player.previousPosition = player.currentPosition;
             player.currentPosition += game.result;
+
+            if (player.currentPosition === 63) {
+                alert(`${player.name} a gagné ! `)
+            } else if (player.currentPosition > 63){
+                const back = player.currentPosition - 63;
+                console.log(`Le ${player.name} dépasse la case 63 et doit reculer de ${back} cases`);
+                player.currentPosition = 63 - back;
+                console.log(player.currentPosition);
+            }
 
             console.log(`${player.name} fait un score de ${game.result}, par ${game.dice1} et ${game.dice2}, il avance de la case ${player.previousPosition} à la case ${player.currentPosition}`);
 
