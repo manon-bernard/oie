@@ -21,8 +21,8 @@
             <div class="board-grid">
                 
                 <div class="case" id="case-0">
-                    <img src="../assets/images/oie-red.svg" alt="silhouette oie" class="token computer-goose">
-                    <img src="../assets/images/oie-blue.svg" alt="silhouette oie" class="token player-goose">
+                    <img src="../assets/images/oie-red.svg" alt="silhouette oie" id="playerTwo-goose">
+                    <img src="../assets/images/oie-blue.svg" alt="silhouette oie" id="playerOne-goose">
                     <span>D</span>
                 </div>
                 <div class="case" id="case-1"><span>1</span></div>
@@ -94,7 +94,7 @@
         <section class="roll-section">
 
             <div class="option container" id="start-game">
-                <p>Un joueur contre l'ordinateur</p>
+                <p>Deux joueurs à tour de rôle</p>
                 <button class="btn" id="btn-start">Démarrer la partie</button>
             </div>
 
@@ -106,7 +106,7 @@
                     </div>
                 </div>
                 <div class="column container">
-                    <p id="turn">A votre tour</p>
+                    <p>A votre tour: <span id="turn">Joueur 1</span> </p>
                     <button class="btn" id="roll-btn">Lancer les dés</button>
                 </div>
             </div>
