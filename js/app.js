@@ -33,6 +33,10 @@ const playerTwo = {
     previousPosition: 0,
 }
 
+// Fonctions
+
+
+
 // Dice roll
 
 const rollButton = document.querySelector("#roll-btn");
@@ -69,26 +73,50 @@ function handleRollButton() {
     game.dice2 = rollOne(dices[1]);
     game.result = game.dice1 + game.dice2;
 
-    //Move
+    //Move Fonctions
 
-    let targetBox = "case-";
+    function checkFirstRoll(player){
+        if ((game.dice1 === 6 && game.dice2 === 3)||(game.dice1 === 3 && game.dice2 === 6)) {
+            player.previousPosition = player.currentPosition;
+            player.currentPosition += 26;
+        } else if ((game.dice1 === 4 && game.dice2 === 5)||(game.dice1 === 5 && game.dice2 === 4)) {
+            player.previousPosition = player.currentPosition;
+            player.currentPosition += 53;
+        }
+    }
 
     function movePlayer(player) {
-        //Store starting point in previous position.
-        player.previousPosition = player.currentPosition;
 
-        //Update new position in current position.
-        player.currentPosition += game.result;
+        if (player.currentPosition === 0 && game.result === 9) {
+            
+            checkFirstRoll(player)
 
-        //Move Player token
+            console.log(`${player.name} fait un score de ${game.result}, par ${game.dice1} et ${game.dice2}, il avance de la case ${player.previousPosition} à la case ${player.currentPosition}`);
+
+            movePlayerTokenToNewPosition(player);
+
+        } else {
+            player.previousPosition = player.currentPosition;
+            player.currentPosition += game.result;
+
+            console.log(`${player.name} fait un score de ${game.result}, par ${game.dice1} et ${game.dice2}, il avance de la case ${player.previousPosition} à la case ${player.currentPosition}`);
+
+            movePlayerTokenToNewPosition(player);
+        }
+        
+        
+    }
+
+    function movePlayerTokenToNewPosition(player){
+        let targetBox = "case-";
         targetBox += player.currentPosition;
         const box = document.getElementById(targetBox);
         const token = document.getElementById(player.name);
         box.prepend(token);
-
-        
-        // console.log(`${player.name} fait un score de ${game.result}, par ${game.dice1} et ${game.dice2}, il avance de la case ${player.previousPosition} à la case ${player.currentPosition}`);
     }
+
+
+    //Game: Active Player
 
     if (game.activePlayer == 'playerOne') {
         movePlayer(playerOne);
@@ -96,7 +124,7 @@ function handleRollButton() {
         movePlayer(playerTwo);
     }
 
-    //Passer au joueur suivant
+    // Game: Next Player
     const turn = document.getElementById('turn');
 
     if (game.activePlayer == 'playerOne') {
