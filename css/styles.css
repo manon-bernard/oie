@@ -438,11 +438,37 @@ h1 {
 }
 
 .dice {
-    height:2.5rem;
-    width:2.5rem;
+    height:54px;
+    width:54px;
+    background-image: url('../assets/images/dice-sprite.png');
     background-color: var(--white);
     border:2px solid var(--roll-bg-color);
 }
+
+.one{
+    background-position-x: 0px;
+  }
+  
+  .two{
+    background-position-x: -51px;
+  }
+  
+  .three{
+    background-position-x: -101px;
+  }
+  
+  .four{
+    background-position-x: -151px;
+  }
+  
+  .five{
+    background-position-x: -201px;
+  }
+  
+  .six{
+    background-position-x: -251px;
+  }
+
 
 .player-turn {
     display: flex;
