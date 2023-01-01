@@ -60,11 +60,10 @@ h1 {
 }
 
 
-
 /*---BOARD SECTION---*/
 
 .board-section {
-    height: calc(75vh - 3.5rem);
+    height: auto;
     padding: 1rem;
     display:flex;
     justify-content: center;
@@ -397,12 +396,12 @@ h1 {
 .roll-section {
     background-color: var(--roll-bg-color);
     color: var(--white);
+    border: 2px solid var(--title-bg-color);
 }
 
 
 .option {
     height: 25vh;
-    border: 2px solid var(--title-bg-color);
     padding: 1rem;
 }
 
@@ -412,15 +411,20 @@ h1 {
     justify-content: center;
     align-items: center;
     gap: 1rem;
+
 }
 
 .roll-container {
     display: flex;
+    justify-content: space-between;
     padding: 2rem;
+    max-width: 60vw;
+    margin-inline:auto;
+
 }
 
 .column {
-    width: 50%;
+    width: 45%;
     display: flex;
     flex-direction: column;
 }
@@ -435,6 +439,24 @@ h1 {
     gap:1rem;
     justify-content: center;
     align-items: center;
+}
+
+#closeAside, #closeAsideSmall {
+    display:block;
+    margin-top:1rem;
+    text-align:right;
+    align-self: end;
+    cursor: pointer;
+    text-transform: uppercase;
+    color:var(--white);
+}
+
+#closeAside:hover {
+    border-bottom: 1px solid var(--white);
+}
+
+.closed {
+    display:none;
 }
 
 .dice {
@@ -512,6 +534,8 @@ aside {
     overflow-y: scroll;
 }
 
+
+
 h2,
 h3 {
     color: var(--rules-txt-color);
@@ -532,9 +556,59 @@ aside span {
     color: var(--roll-bg-color);
 }
 
+
+
 aside p {
     margin-bottom: 0.25rem;
 }
 
 
 
+/*---Media Queries SECTION---*/
+
+@media screen and (max-width:700px) {
+
+    .roll-section {
+        overflow-y:hidden;
+   
+    }
+
+    .roll-container {
+        flex-flow: column nowrap;
+        width:100vw;
+        
+        align-items: center;
+        height:auto;
+        gap:1rem;
+    }
+    .column {
+        width:auto;
+    }
+    .track {
+        height:auto;
+        width:auto;
+        padding:2rem;
+    }
+
+    .board-section {
+        height:calc(100vh - 5rem);
+        width:100vw;
+        overflow: hidden;
+    }
+
+    .board-grid {
+        height:auto;
+        margin:1rem;
+        padding:1rem;
+        overflow: scroll;;
+
+    }
+
+    aside {
+        position:absolute;
+        right:1rem;
+        top:1rem;
+        max-width:75vw;
+        height:auto;
+    }
+}

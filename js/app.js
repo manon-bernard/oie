@@ -183,15 +183,16 @@ function handleRollButton() {
         }
 
         //Move token (slightly slower)
-        setTimeout(movePlayerTokenToNewPosition, 500, player)
-        setTimeout(movePlayerTokenToNewPosition, 500, secondPlayer)
+
+        movePlayerTokenToNewPosition(player);
+        movePlayerTokenToNewPosition(secondPlayer);
+
 
         if (player.currentPosition === 63) {
             //Win
             console.log(`Le ${player.name} atteint la case 63 (en faisant un score de ${game.result}), il a gagné !`);
             alert(`${player.name} a gagné ! `);
         }
-
     }
 
 

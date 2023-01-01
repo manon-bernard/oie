@@ -16,10 +16,11 @@
             <img src="../assets/images/oie-1.svg" alt="silhouette oie">
             <h1>Jeu de l'oie</h1>
             <img src="../assets/images/oie-2.svg" alt="silhouette oie">
+
         </section>
         <section class="board-section">
             <div class="board-grid">
-                
+
                 <div class="case" id="case-0">
                     <img src="../assets/images/oie-red.svg" alt="silhouette oie" id="playerTwo">
                     <img src="../assets/images/oie-blue.svg" alt="silhouette oie" id="playerOne">
@@ -109,36 +110,41 @@
                     <p>A votre tour: <span id="turn">Joueur 1</span> </p>
                     <button class="btn" id="roll-btn">Lancer les dés</button>
                 </div>
+                <a id="closeAside">Regles</a>
             </div>
 
         </section>
     </main>
-    <aside>
-        <h2>Règles du jeu</h2>
-        <h3>But du jeu</h3>
-        <p>Atteindre exactement la <span>case 63.</span> Reculez si vous la dépassez.</p>
-        <p>Si un joueur arrive sur la case où vous vous trouvez, vous echangez vos places.</p>
-        <h3>Premier tour de jeu</h3>
-        <p>Dés 6 et 3 : Avancez <span>case 26</span></p>
-        <p>Dés 4 et 5 : Avancez <span>case 53</span></p>
-        <h3>Cases spéciales</h3>
-        <h4>Oies</h4>
-        <p><span>Cases 9, 18, 27, 36, 45, 54: </span>Avancez à nouveau du même score de dés</p>
-        <h4>Pont</h4>
-        <p><span>Case 6: </span>Avancez à la <span>case 9</span></p>
-        <h4>Hotel</h4>
-        <p><span>Case 19: </span>Passez 2 tours</p>
-        <h4>Puits</h4>
-        <p><span>Case 31: </span>Attendez qu'un autre joueur prenne votre place</p>
-        <h4>Labyrinthe</h4>
-        <p><span>Case 42: </span>Retournez à la <span>case 30</span></p>
-        <h4>Prison</h4>
-        <p><span>Case 52: </span>Attendez qu'un autre joueur vous libère</p>
-        <h4>Tête de mort</h4>
-        <p><span>Case 58: </span>Retournez à la <span>case départ</span></p>
+    <aside class="closed">
+            <h2>Règles du jeu</h2>
+            <h3>But du jeu</h3>
+            <p>Atteindre exactement la <span>case 63.</span> Reculez si vous la dépassez.</p>
+            <p>Si un joueur arrive sur la case où vous vous trouvez, vous echangez vos places.</p>
+            <h3>Premier tour de jeu</h3>
+            <p>Dés 6 et 3 : Avancez <span>case 26</span></p>
+            <p>Dés 4 et 5 : Avancez <span>case 53</span></p>
+            <h3>Cases spéciales</h3>
+            <h4>Oies</h4>
+            <p><span>Cases 9, 18, 27, 36, 45, 54: </span>Avancez à nouveau du même score de dés</p>
+            <h4>Pont</h4>
+            <p><span>Case 6: </span>Avancez à la <span>case 9</span></p>
+            <h4>Hotel</h4>
+            <p><span>Case 19: </span>Passez 2 tours</p>
+            <h4>Puits</h4>
+            <p><span>Case 31: </span>Attendez qu'un autre joueur prenne votre place</p>
+            <h4>Labyrinthe</h4>
+            <p><span>Case 42: </span>Retournez à la <span>case 30</span></p>
+            <h4>Prison</h4>
+            <p><span>Case 52: </span>Attendez qu'un autre joueur vous libère</p>
+            <h4>Tête de mort</h4>
+            <p><span>Case 58: </span>Retournez à la <span>case départ</span></p>
+            
+            <a id="closeAsideSmall">Fermer</a>
+
     </aside>
 
     <script src="../js/app.js"></script>
+    <script src="../js/layout.js"></script>
 </body>
 
 </html>
