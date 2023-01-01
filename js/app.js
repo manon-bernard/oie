@@ -24,7 +24,8 @@ const playerOne = {
     color: 'blue',
     currentPosition: 0,
     previousPosition: 0,
-    waiting:0,
+    waiting: 0,
+    locked: false,
 }
 
 const playerTwo = {
@@ -32,12 +33,11 @@ const playerTwo = {
     color: 'red',
     currentPosition: 0,
     previousPosition: 0,
-    waiting:0,
+    waiting: 0,
+    locked: false,
 }
 
-// Fonctions
-
-
+const specials = [6, 9, 18, 19, 27, 31, 36, 42, 45, 52, 54, 58];
 
 // Dice roll
 
@@ -85,84 +85,66 @@ function handleRollButton() {
             player.previousPosition = player.currentPosition;
             player.currentPosition += 53;
         }
+        console.log(`${player.name} fait un score de ${game.result}, par ${game.dice1} et ${game.dice2}, il avance de la case ${player.previousPosition} à la case ${player.currentPosition}`);
     }
 
-    function movePlayer(player, secondPlayer) {
+    function checkMalus(player, secondPlayer) {
 
-        if (player.currentPosition === 0 && game.result === 9) {
-
-            checkFirstRoll(player)
-
-            console.log(`${player.name} fait un score de ${game.result}, par ${game.dice1} et ${game.dice2}, il avance de la case ${player.previousPosition} à la case ${player.currentPosition}`);
-
-            movePlayerTokenToNewPosition(player);
-
-        } else {
-
-            player.previousPosition = player.currentPosition;
-            player.currentPosition += game.result;
-
-            if (player.currentPosition > 63) {
-                //Backwards Move
-                const back = player.currentPosition - 63;
-                player.currentPosition = 63 - back;
-                console.log(`Le ${player.name} dépasse la case 63 (en faisant un score de ${game.result}) et doit reculer de ${back} cases, il retourne à la case ${player.currentPosition}`);
-            } else if (player.currentPosition === 63) {
-                //Win
-                alert(`${player.name} a gagné ! `);
+        if (player.currentPosition === 19) {
+            //Hotel
+            player.waiting = 2;
+            console.log(`HOTEL: ${player.name} fait un score de ${game.result} et tombe sur la case Hotel, il doit passer 2 tours`);
+        } else if (player.currentPosition === 31) {
+            //Puits
+            if (secondPlayer.previousPosition === player.currentPosition) {
+                console.log(secondPlayer.previousPosition);
+                console.log(player.currentPosition);
+                player.locked = true;
+                secondPlayer.locked = false;
+                console.log(`PUITS: ${player.name} fait un score de ${game.result} et tombe sur la case Puits, il prend la place de ${secondPlayer.name}`);
             } else {
-                if (player.previousPosition === 0 && game.result === 9) {
-                    //9 at start
-                    checkFirstRoll(player)
-                    console.log(`${player.name} fait un score de ${game.result}, par ${game.dice1} et ${game.dice2}, il avance de la case ${player.previousPosition} à la case ${player.currentPosition}`);
-                } else if ((player.currentPosition === 9) || (player.currentPosition === 18) || (player.currentPosition === 27) || (player.currentPosition === 36) || (player.currentPosition === 45) || (player.currentPosition === 54)) {
-                    //Oies
-                    player.currentPosition += game.result;
-                    console.log(`${player.name} fait un score de ${game.result} et tombe sur une case Oie, il avance à nouveau de ${game.result} et se retrouve à la case ${player.currentPosition}`);
-                } else if (player.currentPosition === 6) {
-                    //Pont
-                    player.currentPosition = 12;
-                    console.log(`${player.name} fait un score de ${game.result} et tombe sur la case Pont, il avance jusqu'à la case ${player.currentPosition}`);
-                } else if (player.currentPosition === 42) {
-                    //Labyrinthe
-                    player.currentPosition = 30;
-                    console.log(`${player.name} fait un score de ${game.result} et tombe sur la case Labyrinthe, il retourne à la case ${player.currentPosition}`);
-                } else if (player.currentPosition === 58) {
-                    //Tête de Mort
-                    player.currentPosition = 0;
-                    console.log(`${player.name} fait un score de ${game.result} et tombe sur la case Tête de Mort, il recommence à 0`);
-                } else if (player.currentPosition === 19) {
-                    //Hotel
-                    player.waiting = 2;
-                    console.log(`${player.name} fait un score de ${game.result} et tombe sur la case Hotel, il doit passer 2 tours`);
-                }else {
-                    //Other cases
-                    console.log(`${player.name} fait un score de ${game.result}, il avance de la case ${player.previousPosition} à la case ${player.currentPosition}`);
-                }
+                player.locked = true;
+                console.log(`PUITS: ${player.name} fait un score de ${game.result} et tombe sur la case Puits, il doit attendre qu'un joueur viennent prendre sa place`);
             }
-
-
-
-            // } else if () {
-
-            // } else if () {
-
-            // } else if () {
-
-            // }
-
-            //Manage the one player by box rule.
-            if (player.currentPosition === secondPlayer.currentPosition) {
-                secondPlayer.currentPosition = player.previousPosition;
-                console.log(`${player.name} atteint la même case que ${secondPlayer.name} et prends sa place`);
+        } else if (player.currentPosition === 42) {
+            //Labyrinthe
+            player.currentPosition = 30;
+            console.log(`LABYRINTHE: ${player.name} fait un score de ${game.result} et tombe sur la case Labyrinthe, il retourne à la case ${player.currentPosition}`);
+        } else if (player.currentPosition === 52) {
+            //Prison
+            if (secondPlayer.previousPosition === player.currentPosition) {
+                player.locked = false;
+                secondPlayer.locked = false;
+                console.log(`PRISON: ${player.name} fait un score de ${game.result} et tombe sur la case Prison, il libère ${secondPlayer.name}`);
+            } else {
+                player.locked = true;
+                console.log(`PRISON: ${player.name} fait un score de ${game.result} et tombe sur la case Prison, il doit attendre qu'un joueur viennent le libérer`);
             }
-
-
-            movePlayerTokenToNewPosition(player);
-            movePlayerTokenToNewPosition(secondPlayer);
+        } else if (player.currentPosition === 58) {
+            //Tête de Mort
+            player.currentPosition = 0;
+            console.log(`TETE DE MORT: ${player.name} fait un score de ${game.result} et tombe sur la case Tête de Mort, il recommence à 0`);
         }
+    }
 
+    function checkBonus(player) {
+        if ((player.currentPosition === 9) || (player.currentPosition === 18) || (player.currentPosition === 27) || (player.currentPosition === 36) || (player.currentPosition === 45) || (player.currentPosition === 54)) {
+            //Oies
+            player.currentPosition += game.result;
+            console.log(`OIE: ${player.name} fait un score de ${game.result} et tombe sur une case Oie, il avance à nouveau de ${game.result} et se retrouve à la case ${player.currentPosition}`);
+        } else if (player.currentPosition === 6) {
+            //Pont
+            player.currentPosition = 12;
+            console.log(`PONT: ${player.name} fait un score de ${game.result} et tombe sur la case Pont, il avance jusqu'à la case ${player.currentPosition}`);
+        }
+    }
 
+    function checkBackward(player) {
+        if (player.currentPosition > 63) {
+            const back = player.currentPosition - 63;
+            player.currentPosition = 63 - back;
+            console.log(`TROP LOIN: Le ${player.name} dépasse la case 63 (en faisant un score de ${game.result}) et doit reculer de ${back} cases, il retourne à la case ${player.currentPosition}`);
+        }
     }
 
     function movePlayerTokenToNewPosition(player) {
@@ -171,6 +153,45 @@ function handleRollButton() {
         const box = document.getElementById(targetBox);
         const token = document.getElementById(player.name);
         box.prepend(token);
+    }
+
+    function movePlayer(player, secondPlayer) {
+
+        if (player.currentPosition === 0 && game.result === 9) {
+            checkFirstRoll(player)
+            movePlayerTokenToNewPosition(player);
+
+        } else {
+            player.previousPosition = player.currentPosition;
+            player.currentPosition += game.result;
+        }
+
+        if (specials.includes(player.currentPosition) || player.currentPosition > 63) {
+            while (specials.includes(player.currentPosition) && (player.locked === false) && (player.waiting === 0) || player.currentPosition > 63) {
+                checkBonus(player);
+                checkMalus(player, secondPlayer);
+                checkBackward(player);
+            }
+        } else {
+            console.log(`${player.name} avance jusqu'à la case ${player.currentPosition} avec un score de ${game.result}`);
+        }
+
+        //Manage the one player by box rule.
+        if (player.currentPosition === secondPlayer.currentPosition) {
+            secondPlayer.currentPosition = player.previousPosition;
+            console.log(`${player.name} atteint la même case que ${secondPlayer.name} et prends sa place`);
+        }
+
+        //Move token (slightly slower)
+        setTimeout(movePlayerTokenToNewPosition, 500, player)
+        setTimeout(movePlayerTokenToNewPosition, 500, secondPlayer)
+
+        if (player.currentPosition === 63) {
+            //Win
+            console.log(`Le ${player.name} atteint la case 63 (en faisant un score de ${game.result}), il a gagné !`);
+            alert(`${player.name} a gagné ! `);
+        }
+
     }
 
 
@@ -187,28 +208,28 @@ function handleRollButton() {
 
     if (game.activePlayer === 'playerOne') {
         if (playerTwo.waiting === 0) {
-            game.activePlayer = 'playerTwo';
-            turn.textContent = 'Joueur 2 ';
+            if (playerTwo.locked === false) {
+                game.activePlayer = 'playerTwo';
+                turn.textContent = 'Joueur 2 ';
+            } else {
+                console.log('playerTwo ne peut pas sortir de sa case');
+            }
         } else {
             console.log(`playerTwo passe son tour`);
             playerTwo.waiting -= 1;
         }
     } else {
         if (playerOne.waiting === 0) {
-            game.activePlayer = 'playerOne';
-            turn.textContent = 'Joueur 1 ';
+            if (playerOne.locked === false) {
+                game.activePlayer = 'playerOne';
+                turn.textContent = 'Joueur 1 ';;
+            } else {
+                console.log('playerOne ne peut pas sortir de sa case');
+            }
+
         } else {
             console.log(`playerOne passe son tour`);
             playerOne.waiting -= 1;
         }
     }
-
-
 }
-
-
-
-  //gestion de l'arrivée
-  //gestion des cases spéciales
-  //gestion des cases occupées
-
