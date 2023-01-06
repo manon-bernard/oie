@@ -69,6 +69,8 @@ function rollOne(element) {
 function handleRollButton() {
 
     let dices = document.getElementsByClassName("dice");
+    let message = '';
+    let messageEl = document.getElementById('previous-turn');
 
     //Roll
     game.dice1 = rollOne(dices[0]);
@@ -86,6 +88,7 @@ function handleRollButton() {
             player.currentPosition += 53;
         }
         console.log(`${player.name} fait un score de ${game.result}, par ${game.dice1} et ${game.dice2}, il avance de la case ${player.previousPosition} à la case ${player.currentPosition}`);
+        // message = `${player.name} fait un score de ${game.result}, par ${game.dice1} et ${game.dice2}, il avance de la case ${player.previousPosition} à la case ${player.currentPosition}`;
     }
 
     function checkMalus(player, secondPlayer) {
@@ -94,6 +97,7 @@ function handleRollButton() {
             //Hotel
             player.waiting = 2;
             console.log(`HOTEL: ${player.name} fait un score de ${game.result} et tombe sur la case Hotel, il doit passer 2 tours`);
+            // message = `${player.name} fait un score de ${game.result} et tombe sur la case Hotel, il doit passer 2 tours`;
         } else if (player.currentPosition === 31) {
             //Puits
             if (secondPlayer.previousPosition === player.currentPosition) {
@@ -102,28 +106,34 @@ function handleRollButton() {
                 player.locked = true;
                 secondPlayer.locked = false;
                 console.log(`PUITS: ${player.name} fait un score de ${game.result} et tombe sur la case Puits, il prend la place de ${secondPlayer.name}`);
+                // message = `${player.name} fait un score de ${game.result} et tombe sur la case Puits, il prend la place de ${secondPlayer.name}`;
             } else {
                 player.locked = true;
                 console.log(`PUITS: ${player.name} fait un score de ${game.result} et tombe sur la case Puits, il doit attendre qu'un joueur viennent prendre sa place`);
+                // message = `${player.name} fait un score de ${game.result} et tombe sur la case Puits, il doit attendre qu'un joueur viennent prendre sa place`;
             }
         } else if (player.currentPosition === 42) {
             //Labyrinthe
             player.currentPosition = 30;
             console.log(`LABYRINTHE: ${player.name} fait un score de ${game.result} et tombe sur la case Labyrinthe, il retourne à la case ${player.currentPosition}`);
+            // message = `${player.name} fait un score de ${game.result} et tombe sur la case Labyrinthe, il retourne à la case ${player.currentPosition}`;
         } else if (player.currentPosition === 52) {
             //Prison
             if (secondPlayer.previousPosition === player.currentPosition) {
                 player.locked = false;
                 secondPlayer.locked = false;
                 console.log(`PRISON: ${player.name} fait un score de ${game.result} et tombe sur la case Prison, il libère ${secondPlayer.name}`);
+                // message = `${player.name} fait un score de ${game.result} et tombe sur la case Prison, il libère ${secondPlayer.name}`;
             } else {
                 player.locked = true;
                 console.log(`PRISON: ${player.name} fait un score de ${game.result} et tombe sur la case Prison, il doit attendre qu'un joueur viennent le libérer`);
+                // message = `${player.name} fait un score de ${game.result} et tombe sur la case Prison, il doit attendre qu'un joueur viennent le libérer`;
             }
         } else if (player.currentPosition === 58) {
             //Tête de Mort
             player.currentPosition = 0;
             console.log(`TETE DE MORT: ${player.name} fait un score de ${game.result} et tombe sur la case Tête de Mort, il recommence à 0`);
+            // message = `${player.name} fait un score de ${game.result} et tombe sur la case Tête de Mort, il recommence à 0`;
         }
     }
 
@@ -132,10 +142,12 @@ function handleRollButton() {
             //Oies
             player.currentPosition += game.result;
             console.log(`OIE: ${player.name} fait un score de ${game.result} et tombe sur une case Oie, il avance à nouveau de ${game.result} et se retrouve à la case ${player.currentPosition}`);
+            // message = `${player.name} fait un score de ${game.result} et tombe sur une case Oie, il avance à nouveau de ${game.result} et se retrouve à la case ${player.currentPosition}`; 
         } else if (player.currentPosition === 6) {
             //Pont
             player.currentPosition = 12;
             console.log(`PONT: ${player.name} fait un score de ${game.result} et tombe sur la case Pont, il avance jusqu'à la case ${player.currentPosition}`);
+            // message = `${player.name} fait un score de ${game.result} et tombe sur la case Pont, il avance jusqu'à la case ${player.currentPosition}`;
         }
     }
 
@@ -144,6 +156,7 @@ function handleRollButton() {
             const back = player.currentPosition - 63;
             player.currentPosition = 63 - back;
             console.log(`TROP LOIN: Le ${player.name} dépasse la case 63 (en faisant un score de ${game.result}) et doit reculer de ${back} cases, il retourne à la case ${player.currentPosition}`);
+            // message = `Le ${player.name} dépasse la case 63 (en faisant un score de ${game.result}) et doit reculer de ${back} cases, il retourne à la case ${player.currentPosition}`;
         }
     }
 
@@ -174,16 +187,19 @@ function handleRollButton() {
             }
         } else {
             console.log(`${player.name} avance jusqu'à la case ${player.currentPosition} avec un score de ${game.result}`);
+            // message = `${player.name} avance jusqu'à la case ${player.currentPosition} avec un score de ${game.result}`;
         }
 
         //Manage the one player by box rule.
-        if (player.currentPosition === secondPlayer.currentPosition) {
+        if (player.currentPosition === secondPlayer.currentPosition && secondPlayer.currentPosition != 0) {
             secondPlayer.currentPosition = player.previousPosition;
             console.log(`${player.name} atteint la même case que ${secondPlayer.name} et prends sa place`);
+            // message = `${player.name} atteint la même case que ${secondPlayer.name} et prends sa place`;
         }
 
-        //Move token (slightly slower)
+        //Move token
 
+        messageEl.textContent = message;
         movePlayerTokenToNewPosition(player);
         movePlayerTokenToNewPosition(secondPlayer);
 
@@ -195,6 +211,7 @@ function handleRollButton() {
         }
     }
 
+    
 
     //Game: Active Player
 
