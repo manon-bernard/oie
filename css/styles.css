@@ -1,14 +1,19 @@
 :root {
     /*---COLOR VARIABLES---*/
-    --aside-bg-color: #FFC000;
-    --roll-bg-color: #213D76;
-    --title-bg-color: #87DF2F;
-    --rules-txt-color: #582300;
+    --aside-bg-color: #ddd7c3;
+    --roll-bg-color: #163f64;
+    --title-bg-color: #16d1d4;
+    --rules-txt-color: #411e07;
     --white: #F2F2EC;
     --black: #212123;
 
     /*---SIZE VARIABLES---*/
-    --case-size: 2.75rem;
+    --case-size: 3vw;
+}
+
+@media screen and (max-width:700px){
+    :root {
+        --case-size: 7vw;}
 }
 
 * {
@@ -23,60 +28,43 @@ body {
     /*---GENERAL FONT STYLES---*/
     font-family: "lexend", sans-serif;
     color: var(--black);
-
-
-
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
+    background-color: var(--roll-bg-color);
 }
 
-main {
-    /*---FLEX LAYOUT---*/
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    height:100vh;
 
+@media screen and (max-width:700px){
+    body {
+        font-size: 0.75rem;
+    }
 }
 
-img {
-    height: 2rem;
-}
 
 /*---TITLE SECTION---*/
 
 .title {
     background-color: var(--title-bg-color);
-    height: 3.5rem;
-    padding: 0.5rem;
     display: flex;
-    justify-content: center;
     align-content: center;
+    justify-content: space-between;
 }
 
 h1 {
-    font-size: 2rem;
+    font-size: 2vw;
     font-weight: 800;
     text-transform: uppercase;
-    margin-inline: 1rem;
 }
-
 
 /*---BOARD SECTION---*/
 
 .board-section {
-    height: auto;
-    flex-grow: 1;
-    padding: 1rem;
     display:flex;
     justify-content: center;
-    align-items: center;
+    background-color: var(--white);
 }
 
 .board-grid {
     display: grid;
-    gap:5px;
+    padding-block: 1em;;
     grid-template-columns: repeat(13, 1fr);
     grid-template-rows: repeat(12, 1fr);
     grid-template-areas: 
@@ -97,18 +85,18 @@ h1 {
 .case {
     background-color: var(--aside-bg-color);
     border-radius:0.5rem;
-    margin-top:auto;
     height:var(--case-size);
     width:var(--case-size);
     padding:2px;
-    
+    margin:1px;
     display:flex;
     justify-content: right;
     align-items: flex-end;
 }
 
-.token {
-    height:2.75rem;
+#playerOne, #playerTwo {
+    height:var(--case-size);
+    position:absolute;
 }
 
 #case-0 {
@@ -393,61 +381,60 @@ h1 {
 }
 
 
-
-
 /*---ROLL SECTION---*/
 
 .roll-section {
-    background-color: var(--roll-bg-color);
     color: var(--white);
-    border: 2px solid var(--title-bg-color);
+    border-top: 2px solid var(--title-bg-color);
+    padding:0.25rem;
 }
 
+@media screen and (max-width:700px){
+    .roll-section {
+        padding: 0,1rem;
+    }
+}
 
 .option {
-    height: 25vh;
-    padding: 1rem;
+    max-height: 25vh;
+    padding: 0.5rem;
 }
 
 .container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    gap: 1rem;
-
 }
 
 .roll-container {
     display: flex;
-    justify-content: space-between;
-    padding: 2rem;
-    max-width: 60vw;
-    margin-inline:auto;
-
-}
-
-.column {
-    width: 45%;
-    display: flex;
-    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
 }
 
 .track {
     background-color: var(--title-bg-color);
-    height: 90%;
-    width: 75%;
-    margin: auto;
     border: 2px solid var(--white);
-    display:flex;
-    gap:1rem;
-    justify-content: center;
-    align-items: center;
 }
+
+#gamelog{
+    margin: 2rem auto;
+    max-width:50%;
+    max-height: 10vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+#gamelog li{
+    margin: 0.75rem;
+    font-size: 0.75rem;
+
+}
+
 
 #closeAside, #closeAsideSmall {
     display:block;
-    margin-top:1rem;
     text-align:right;
     align-self: end;
     cursor: pointer;
@@ -502,14 +489,10 @@ h1 {
     gap: 1rem;
 }
 
-.player-turn img {
-    height: 2rem;
-    color: #833C0C;
-}
-
 .btn {
     display: inline-block;
     padding: 1em;
+    margin:0.2em;
     border-top: 0.2rem solid var(--white);
     border-bottom: 0.3rem solid var(--title-bg-color);
     border-radius: 0.75rem;
@@ -523,6 +506,12 @@ h1 {
     border-bottom: 0.2rem solid var(--title-bg-color);
 }
 
+@media screen and (max-width:700px){
+    .btn {
+        padding: 0.5rem;
+    }
+}
+
 .hidden {
     display:none;
 }
@@ -531,14 +520,15 @@ h1 {
 /*---ASIDE SECTION---*/
 
 aside {
+    position: absolute;
+    top:0;
+    right:0;
     background-color: var(--aside-bg-color);
-    max-width: 25vw;
+    max-width: 75vw;
     height: 100vh;
     padding: 1.5rem;
     overflow-y: scroll;
 }
-
-
 
 h2,
 h3 {
@@ -560,59 +550,6 @@ aside span {
     color: var(--roll-bg-color);
 }
 
-
-
 aside p {
     margin-bottom: 0.25rem;
-}
-
-
-
-/*---Media Queries SECTION---*/
-
-@media screen and (max-width:700px) {
-
-    .roll-section {
-        overflow-y:hidden;
-   
-    }
-
-    .roll-container {
-        flex-flow: column nowrap;
-        width:100vw;
-        
-        align-items: center;
-        height:auto;
-        gap:1rem;
-    }
-    .column {
-        width:auto;
-    }
-    .track {
-        height:auto;
-        width:auto;
-        padding:2rem;
-    }
-
-    .board-section {
-        height:calc(100vh - 5rem);
-        width:100vw;
-        overflow: hidden;
-    }
-
-    .board-grid {
-        height:auto;
-        margin:1rem;
-        padding:1rem;
-        overflow: scroll;;
-
-    }
-
-    aside {
-        position:absolute;
-        right:1rem;
-        top:1rem;
-        max-width:75vw;
-        height:auto;
-    }
 }
